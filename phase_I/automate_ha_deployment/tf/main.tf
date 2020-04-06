@@ -2,7 +2,7 @@ locals {
   name               = "rancher-onboarding"
   rancher_version    = "v2.2.8"
   kubernetes_version = "v1.14.6-rancher1-1"
-  le_email           = "none@none.com"
+  le_email           = "mikebookham@hotmail.com"
   domain             = "example.org"
   instance_type      = "t3.large"
   master_node_count  = 3

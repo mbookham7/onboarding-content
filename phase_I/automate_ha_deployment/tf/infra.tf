@@ -78,7 +78,7 @@ resource "aws_instance" "rancher-master" {
   count                 = local.master_node_count
   ami                   = data.aws_ami.ubuntu.id
   instance_type         = local.instance_type
-  iam_instance_profile  = "${aws_iam_instance_profile.ec2-etcd-profile.name}"
+  iam_instance_profile  = aws_iam_instance_profile.ec2-etcd-profile.name
   key_name              = aws_key_pair.ssh.id
   user_data             = data.template_file.cloud_config.rendered
 
@@ -102,7 +102,7 @@ resource "aws_instance" "rancher-worker" {
   count                 = local.worker_node_count
   ami                   = data.aws_ami.ubuntu.id
   instance_type         = local.instance_type
-  iam_instance_profile  = "${aws_iam_instance_profile.ec2-etcd-profile.name}"
+  iam_instance_profile  = aws_iam_instance_profile.ec2-etcd-profile.name
   key_name              = aws_key_pair.ssh.id
   user_data             = data.template_file.cloud_config.rendered
 

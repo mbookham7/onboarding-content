@@ -4,6 +4,7 @@ resource "null_resource" "cert-manager-crds" {
 kubectl apply -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.10/deploy/manifests/00-crds.yaml
 kubectl create namespace cert-manager
 kubectl label namespace cert-manager certmanager.k8s.io/disable-validation=true
+kubectl create namespace cattle-system
 EOF
 
 
@@ -31,7 +32,8 @@ resource "helm_release" "cert_manager" {
 # install rancher
 resource "helm_release" "rancher" {
   name      = "rancher"
-  chart     = "rancher-stable/rancher"
+  #chart     = "rancher-stable/rancher"
+  chart     = "rancher-latest/rancher"
   version   = local.rancher_version
   namespace = "cattle-system"
 

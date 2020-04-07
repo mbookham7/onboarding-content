@@ -78,7 +78,7 @@ resource "aws_instance" "rancher-master" {
   count                 = local.master_node_count
   ami                   = data.aws_ami.ubuntu.id
   instance_type         = local.instance_type
-  iam_instance_profile  = aws_iam_instance_profile.ec2-etcd-profile.name
+#  iam_instance_profile  = aws_iam_instance_profile.ec2-etcd-profile.name
   key_name              = aws_key_pair.ssh.id
   user_data             = data.template_file.cloud_config.rendered
 
@@ -102,7 +102,7 @@ resource "aws_instance" "rancher-worker" {
   count                 = local.worker_node_count
   ami                   = data.aws_ami.ubuntu.id
   instance_type         = local.instance_type
-  iam_instance_profile  = aws_iam_instance_profile.ec2-etcd-profile.name
+#  iam_instance_profile  = aws_iam_instance_profile.ec2-etcd-profile.name
   key_name              = aws_key_pair.ssh.id
   user_data             = data.template_file.cloud_config.rendered
 
@@ -202,59 +202,59 @@ EOF
   }
 }
 
-resource "aws_s3_bucket" "etcd-backups" {
-  bucket = "${local.name}-rancher-etcd-backup"
-  acl    = "private"
-
-  versioning {
-    enabled = true
-  }
-}
-
-data "aws_iam_policy_document" "instance-assume-role-policy" {
-  statement {
-    actions = ["sts:AssumeRole"]
-
-    principals {
-      type        = "Service"
-      identifiers = ["ec2.amazonaws.com"]
-    }
-  }
-}
-
-resource "aws_iam_role" "etcd-backup-role" {
-  name  = "${local.name}-etcd-backup-role"
-
-  assume_role_policy  = "${data.aws_iam_policy_document.instance-assume-role-policy.json}"
-}
-
-resource "aws_iam_instance_profile" "ec2-etcd-profile" {
-  name = "ec2-etcd-profile"
-  role = "${aws_iam_role.etcd-backup-role.name}"
-}
-
-resource "aws_iam_role_policy" "etcd-backup-policy" {
-  name = "${aws_iam_role.etcd-backup-role.name}-policy"
-  role = "${aws_iam_role.etcd-backup-role.id}"
-
-  policy = <<EOF
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "ListObjectsInBucket",
-            "Effect": "Allow",
-            "Action": ["s3:ListBucket"],
-            "Resource": ["${aws_s3_bucket.etcd-backups.arn}"]
-        },
-        {
-            "Sid": "AllObjectActions",
-            "Effect": "Allow",
-            "Action": "s3:*Object",
-            "Resource": ["${aws_s3_bucket.etcd-backups.arn}/*"]
-        }
-    ]
-}
-EOF
-
-}
+# resource "aws_s3_bucket" "etcd-backups" {
+#  bucket = "${local.name}-rancher-etcd-backup"
+#  acl    = "private"
+#
+#  versioning {
+#    enabled = true
+#  }
+#}
+#
+#data "aws_iam_policy_document" "instance-assume-role-policy" {
+#  statement {
+#    actions = ["sts:AssumeRole"]
+#
+#    principals {
+#      type        = "Service"
+#      identifiers = ["ec2.amazonaws.com"]
+#    }
+#  }
+#}
+#
+#resource "aws_iam_role" "etcd-backup-role" {
+#  name  = "${local.name}-etcd-backup-role"
+#
+#  assume_role_policy  = "${data.aws_iam_policy_document.instance-assume-role-policy.json}"
+#}
+#
+#resource "aws_iam_instance_profile" "ec2-etcd-profile" {
+#  name = "ec2-etcd-profile"
+#  role = "${aws_iam_role.etcd-backup-role.name}"
+#}
+#
+#resource "aws_iam_role_policy" "etcd-backup-policy" {
+#  name = "${aws_iam_role.etcd-backup-role.name}-policy"
+#  role = "${aws_iam_role.etcd-backup-role.id}"
+#
+#  policy = <<EOF
+#{
+#    "Version": "2012-10-17",
+#    "Statement": [
+#        {
+#            "Sid": "ListObjectsInBucket",
+#            "Effect": "Allow",
+#            "Action": ["s3:ListBucket"],
+#            "Resource": ["${aws_s3_bucket.etcd-backups.arn}"]
+#        },
+#        {
+#            "Sid": "AllObjectActions",
+#            "Effect": "Allow",
+#            "Action": "s3:*Object",
+#            "Resource": ["${aws_s3_bucket.etcd-backups.arn}/*"]
+#        }
+#    ]
+#}
+#EOF
+#
+#}

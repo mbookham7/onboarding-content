@@ -1,9 +1,11 @@
 locals {
-  name               = "rancher-onboarding"
-  rancher_version    = "v2.2.8"
-  kubernetes_version = "v1.14.6-rancher1-1"
-  le_email           = "mikebookham@hotmail.com"
-  domain             = "example.org"
+  name               = "rancher-ha"
+  #rancher_version    = "v2.2.8"
+  #kubernetes_version = "v1.14.6-rancher1-1"
+  rancher_version    = "v2.4.2"
+  kubernetes_version = "v1.15.3-rancher1-1"
+  le_email           = "mikebookham7@gmail.com"
+  domain             = "ps.rancher.space"
   instance_type      = "t3.large"
   master_node_count  = 3
   worker_node_count  = 3

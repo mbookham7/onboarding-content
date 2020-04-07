@@ -36,11 +36,11 @@ resource "rke_cluster" "rancher_server" {
       interval_hours = 12
       retention      = 6
       # s3 specific parameters
-      s3_backup_config {
-        bucket_name = aws_s3_bucket.etcd-backups.id
-        region      = "us-east-1"
-        endpoint    = "s3.us-east-1.amazonaws.com"
-      }
+      #s3_backup_config {
+      #  bucket_name = aws_s3_bucket.etcd-backups.id
+      #  region      = "us-east-1"
+      #  endpoint    = "s3.us-east-1.amazonaws.com"
+      #}
     }
   }
 }

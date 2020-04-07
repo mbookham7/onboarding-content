@@ -20,6 +20,6 @@ output "rancher_token" {
   sensitive = true
 }
 
-output "etcBackupS3BucketId" {
-  value = aws_s3_bucket.etcd-backups.id
-}
+#output "etcBackupS3BucketId" {
+#  value = aws_s3_bucket.etcd-backups.id
+#}
